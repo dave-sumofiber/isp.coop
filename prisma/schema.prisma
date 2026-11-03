@@ -1,0 +1,167 @@
+// ISP.coop data model.
+//
+// Each open-access network has its OWN cooperative: its own members, prices,
+// reserves and votes. SUMOFIBER manages and funds each co-op during its
+// sponsor period (first 2 years / network build-out), then governance is
+// handed to a member-elected board.
+//
+// Money is stored as integer cents.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// One cooperative per open-access network (e.g. the Broadlinc co-op).
+model Cooperative {
+  id               String          @id @default(cuid())
+  slug             String          @unique
+  name             String          // e.g. "ISP.coop Broadlinc"
+  networkName      String          // e.g. "Broadlinc"
+  state            String
+  /// Operator's monthly fee per subscriber, passed through to the member.
+  networkFeeCents  Int
+  /// Speed tier sold on this network, e.g. "1 Gbps symmetrical".
+  serviceTier      String
+  /// Open for new members.
+  acceptingMembers Boolean         @default(false)
+
+  governancePhase    GovernancePhase @default(SPONSOR_MANAGED)
+  sponsorName        String          @default("SUMOFIBER")
+  sponsorTermStart   DateTime?
+  /// End of the 2-year sponsor term.
+  sponsorTermEnd     DateTime?
+  /// Set when the network operator declares the build complete.
+  networkBuiltAt     DateTime?
+  /// Set when governance is handed to the member board.
+  handedOverAt       DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members         Member[]
+  costBases       CostBasis[]
+  quarterlyPrices QuarterlyPrice[]
+  reserves        ReserveSnapshot[]
+  ballots         Ballot[]
+}
+
+enum GovernancePhase {
+  SPONSOR_MANAGED  // SUMOFIBER manages and funds the co-op
+  TRANSITION       // board elections underway
+  MEMBER_GOVERNED  // run by a member-elected board
+}
+
+/// A paid subscriber of one co-op. One member = one subscription = one vote in that co-op.
+model Member {
+  id                   String       @id @default(cuid())
+  email                String
+  name                 String
+  serviceAddress       String
+  cooperativeId        String
+  cooperative          Cooperative  @relation(fields: [cooperativeId], references: [id])
+  status               MemberStatus @default(PENDING)
+  stripeCustomerId     String?      @unique
+  stripeSubscriptionId String?      @unique
+  /// Prepaid through this date. Service ends if not renewed.
+  paidThrough          DateTime?
+  joinedAt             DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  votes Vote[]
+
+  @@unique([cooperativeId, email])
+  @@index([cooperativeId, status])
+}
+
+enum MemberStatus {
+  PENDING   // signed up, not yet paid
+  ACTIVE    // prepaid and in good standing; can vote
+  LAPSED    // prepayment ran out
+  CANCELLED
+}
+
+/// A co-op's cost inputs for a quarter. Set by the sponsor, later by the board.
+model CostBasis {
+  id                         String      @id @default(cuid())
+  cooperativeId              String
+  cooperative                Cooperative @relation(fields: [cooperativeId], references: [id])
+  quarter                    String      // e.g. "2027-Q1"
+  fixedOverheadMonthlyCents  Int
+  variableCostPerMemberCents Int
+  reserveTargetMonths        Int         @default(6)
+  reserveRecoveryMonths      Int         @default(12)
+  createdAt                  DateTime    @default(now())
+
+  @@unique([cooperativeId, quarter])
+}
+
+/// The published price for a co-op for a quarter, with its breakdown.
+model QuarterlyPrice {
+  id                       String      @id @default(cuid())
+  cooperativeId            String
+  cooperative              Cooperative @relation(fields: [cooperativeId], references: [id])
+  quarter                  String
+  paidMembersAtCalc        Int
+  networkFeeCents          Int
+  overheadShareCents       Int
+  variableCostCents        Int
+  reserveContributionCents Int
+  totalMonthlyCents        Int
+  calculatedAt             DateTime    @default(now())
+
+  @@unique([cooperativeId, quarter])
+}
+
+/// A co-op's reserve balance snapshots. Reserves are a bylaw requirement.
+model ReserveSnapshot {
+  id            String      @id @default(cuid())
+  cooperativeId String
+  cooperative   Cooperative @relation(fields: [cooperativeId], references: [id])
+  balanceCents  Int
+  asOf          DateTime
+  note          String?
+
+  @@index([cooperativeId, asOf])
+}
+
+/// A member vote within one co-op. One vote per ACTIVE member of that co-op.
+model Ballot {
+  id            String      @id @default(cuid())
+  cooperativeId String
+  cooperative   Cooperative @relation(fields: [cooperativeId], references: [id])
+  title         String
+  description   String
+  opensAt       DateTime
+  closesAt      DateTime
+  createdAt     DateTime    @default(now())
+
+  options BallotOption[]
+  votes   Vote[]
+}
+
+model BallotOption {
+  id       String @id @default(cuid())
+  ballotId String
+  ballot   Ballot @relation(fields: [ballotId], references: [id], onDelete: Cascade)
+  label    String
+
+  votes Vote[]
+}
+
+model Vote {
+  id       String       @id @default(cuid())
+  ballotId String
+  ballot   Ballot       @relation(fields: [ballotId], references: [id], onDelete: Cascade)
+  optionId String
+  option   BallotOption @relation(fields: [optionId], references: [id])
+  memberId String
+  member   Member       @relation(fields: [memberId], references: [id])
+  castAt   DateTime     @default(now())
+
+  @@unique([ballotId, memberId]) // one member, one vote
+}
