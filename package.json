@@ -2,7 +2,7 @@
   "name": "isp-coop",
   "version": "0.1.0",
   "private": true,
-  "description": "ISP.coop \u2014 Internet Service Provider Cooperative. Member-owned, prepaid fiber internet on open-access networks.",
+  "description": "ISP.coop — Internet Service Provider Cooperative. Member-owned, prepaid fiber internet on open-access networks.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +10,7 @@
     "test": "node --test --experimental-strip-types lib/*.test.ts"
   },
   "dependencies": {
-    "next": "14.2.15",
+    "next": "14.2.35",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
