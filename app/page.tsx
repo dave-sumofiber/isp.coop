@@ -30,7 +30,7 @@ export default function Home() {
             co-op. The more members it has, the lower everyone pays.
           </p>
           <div className="actions">
-            <a className="btn" href="/join">Become a member</a>
+            <a className="btn" href="#broadlinc">Launching on Broadlinc</a>
             <a className="btn btn-ghost" href="#pricing">See how pricing works</a>
           </div>
         </div>
@@ -141,7 +141,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
+      <section id="broadlinc">
+        <div className="wrap">
+          <div className="section-head">
+            <p className="eyebrow">Launch network</p>
+            <h2>The first ISP.coop opens on Broadlinc.</h2>
+            <p className="muted">
+              SUMOFIBER will fund and manage the Broadlinc co-op while the network is built out, then hand it
+              to a board elected by its members. Membership opens when service launches.
+            </p>
+          </div>
+        </div>
         <div className="wrap facts">
           <div>
             <h3>No phone support</h3>

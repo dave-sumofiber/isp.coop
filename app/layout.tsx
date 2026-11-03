@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/#how">How it works</a>
               <a href="/#pricing">Pricing</a>
               <a href="/#governance">Governance</a>
-              <a href="/join" className="btn btn-small">Join</a>
+              <a href="/#broadlinc" className="btn btn-small">Broadlinc</a>
             </nav>
           </div>
         </header>
