@@ -30,13 +30,13 @@ export default function Home() {
             co-op. The more members it has, the lower everyone pays.
           </p>
           <div className="actions">
-            <a className="btn" href="#broadlinc">Launching on Broadlinc</a>
+            <a className="btn" href="#networks">For network operators</a>
             <a className="btn btn-ghost" href="#pricing">See how pricing works</a>
           </div>
         </div>
-        <div className="hero-card" aria-label="Launch network">
-          <p className="eyebrow">First co-op</p>
-          <div className="row"><span>Network</span><strong>Broadlinc</strong></div>
+        <div className="hero-card" aria-label="Every ISP.coop">
+          <p className="eyebrow">Every co-op</p>
+          <div className="row"><span>Network</span><strong>Open-access fiber</strong></div>
           <div className="row"><span>Managed by</span><strong>SUMOFIBER</strong></div>
           <div className="row"><span>Billing</span><strong>Prepaid monthly</strong></div>
           <div className="row"><span>Router</span><strong>Bring your own</strong></div>
@@ -141,14 +141,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="broadlinc">
+      <section id="networks">
         <div className="wrap">
           <div className="section-head">
-            <p className="eyebrow">Launch network</p>
-            <h2>The first ISP.coop opens on Broadlinc.</h2>
+            <p className="eyebrow">For network operators</p>
+            <h2>Bring a member-owned ISP to your network.</h2>
             <p className="muted">
-              SUMOFIBER will fund and manage the Broadlinc co-op while the network is built out, then hand it
-              to a board elected by its members. Membership opens when service launches.
+              SUMOFIBER funds and manages a new co-op on your network while it's built out, then hands it to a
+              board elected by its members. Your subscribers get open-book pricing that falls as take rates rise.
             </p>
           </div>
         </div>

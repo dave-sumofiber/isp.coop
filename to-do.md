@@ -7,9 +7,9 @@ The first version of the backend was written and then removed; it is in git hist
 ## Decisions needed
 
 - [ ] **Handover trigger.** Board takes over after 2 years, or when the network is fully built? If they differ, whichever comes first or whichever comes later?
-- [ ] **Nonprofit vs. equity.** Dave's funding was described as equity, but a nonprofit co-op generally can't issue ownership. Consider a sponsor loan or management agreement repaid from co-op revenue. Ask counsel before the Broadlinc pitch.
+- [ ] **Nonprofit vs. equity.** Dave's funding was described as equity, but a nonprofit co-op generally can't issue ownership. Consider a sponsor loan or management agreement repaid from co-op revenue. Ask counsel before pitching networks.
 - [ ] **Entity structure.** One Utah statutory cooperative per network, or one parent with a co-op per network? Confirm with counsel.
-- [ ] **Broadlinc terms.** Network fee per subscriber, service tiers, state, launch date.
+- [ ] **Launch network.** Nothing agreed yet; Broadlinc is a pitch target. Need network fee per subscriber, service tiers, state, launch date once a network signs.
 - [ ] **IP addressing.** During the sponsor period, assign each co-op space from SUMOFIBER (AS54329). At handover, transfer it under ARIN's transfer policy or have the co-op buy its own. ARIN gives no special treatment to nonprofits or co-ops.
 
 ## Business rules the app must enforce

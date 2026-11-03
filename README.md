@@ -1,6 +1,6 @@
 # ISP.coop
 
-Pitch site for the Internet Service Provider Cooperative: member-owned, prepaid fiber internet on open-access networks, launching on Broadlinc.
+Pitch site for the Internet Service Provider Cooperative: member-owned, prepaid fiber internet on open-access networks.
 
 This is a static marketing site. The plan for the working member site (signup, billing, voting, forum) is in [`to-do.md`](to-do.md).
 
