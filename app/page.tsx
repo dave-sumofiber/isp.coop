@@ -98,11 +98,11 @@ export default function Home() {
             </table>
           </div>
           <div>
-            <p className="eyebrow" style={{ marginBottom: "1rem" }}>Monthly price by number of members</p>
+            <p className="eyebrow" style={{ marginBottom: "1rem" }}>Monthly price · members in the co-op</p>
             <div className="curve">
               {curve.map((c) => (
                 <div className="curve-row" key={c.members}>
-                  <span>{c.members.toLocaleString()} members</span>
+                  <span>{c.members.toLocaleString()}</span>
                   <div className="curve-bar" style={{ width: `${(c.totalMonthlyCents / max) * 100}%` }} />
                   <span>{formatUSD(c.totalMonthlyCents)}</span>
                 </div>
