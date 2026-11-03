@@ -1,8 +1,8 @@
 # ISP.coop to-do
 
 The live site is a pitch site only. This file holds the plan for the working member site.
-The first version of the backend was written and then removed; it is in git history at commit `main~1`
-(`git show main~1 -- prisma/schema.prisma` etc.) if you want to restore it.
+The first version of the backend was written and then removed; it is in git history at commit `e4f0873`
+(`git show e4f0873:prisma/schema.prisma` etc.) if you want to restore it.
 
 ## Decisions needed
 
